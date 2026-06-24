@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: badminton-ranking
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/badminton_ranking
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
