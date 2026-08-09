@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,5 +15,6 @@ import lombok.Setter;
 public class RegisterResponse {
     private String username;
     private Role role;
-    private String message;
+    private Boolean enabled;
+    private LocalDateTime createdAt;
 }
