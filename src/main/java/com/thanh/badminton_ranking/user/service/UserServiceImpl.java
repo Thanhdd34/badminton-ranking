@@ -3,14 +3,16 @@ package com.thanh.badminton_ranking.user.service;
 import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
 import com.thanh.badminton_ranking.authentication.dto.response.RegisterResponse;
 import com.thanh.badminton_ranking.common.enums.Role;
+import com.thanh.badminton_ranking.exception.UsernameAlreadyExistsException;
 import com.thanh.badminton_ranking.user.entity.User;
 import com.thanh.badminton_ranking.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
         // kiem tra username ton tai chua
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new UsernameAlreadyExistsException("Username already exists");
         }
 
         //tao user
