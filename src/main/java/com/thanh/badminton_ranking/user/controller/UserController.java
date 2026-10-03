@@ -1,6 +1,8 @@
 package com.thanh.badminton_ranking.user.controller;
 
+import com.thanh.badminton_ranking.authentication.dto.request.LoginRequest;
 import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
+import com.thanh.badminton_ranking.authentication.dto.response.LoginResponse;
 import com.thanh.badminton_ranking.authentication.dto.response.RegisterResponse;
 import com.thanh.badminton_ranking.user.service.UserService;
 import jakarta.validation.Valid;
@@ -18,6 +20,11 @@ public class UserController {
     @PostMapping("/register")
     public RegisterResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+        return userService.login(request);
     }
 
 }

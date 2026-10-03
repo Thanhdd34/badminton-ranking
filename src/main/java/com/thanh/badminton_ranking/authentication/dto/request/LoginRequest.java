@@ -11,11 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class LoginRequest {
     @Size(min = 5, max = 50)
     @NotBlank(message = "Username is required!")
     private String username;
-
     @Size(min = 8, max = 50)
     @NotBlank(message = "Password is required!")
     private String password;

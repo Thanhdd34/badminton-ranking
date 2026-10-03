@@ -1,17 +1,18 @@
 package com.thanh.badminton_ranking.user.service;
 
+import com.thanh.badminton_ranking.authentication.dto.request.LoginRequest;
 import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
+import com.thanh.badminton_ranking.authentication.dto.response.LoginResponse;
 import com.thanh.badminton_ranking.authentication.dto.response.RegisterResponse;
 import com.thanh.badminton_ranking.common.enums.Role;
+import com.thanh.badminton_ranking.exception.InvalidCredentialsException;
+import com.thanh.badminton_ranking.exception.UserDisabledException;
 import com.thanh.badminton_ranking.exception.UsernameAlreadyExistsException;
 import com.thanh.badminton_ranking.user.entity.User;
 import com.thanh.badminton_ranking.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-
 
 
 @Service
@@ -51,4 +52,22 @@ public class UserServiceImpl implements UserService {
         response.setCreatedAt(savedUser.getCreatedAt());
         return response;
     }
+
+    @Override
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid username or password"));
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
+
+        if(Boolean.FALSE.equals(user.getEnabled())) {
+            throw new UserDisabledException("Account is not enabled");
+        }
+        return new  LoginResponse(
+                user.getUsername(),
+                user.getRole()
+        );
+    }
+
 }
