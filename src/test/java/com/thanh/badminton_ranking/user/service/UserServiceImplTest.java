@@ -130,6 +130,9 @@ public class UserServiceImplTest {
         assertNotNull(response);
         assertEquals("thanh", response.getUsername());
         assertEquals(Role.USER, response.getRole());
+
+        verify(userRepository).findByUsername("thanh");
+        verify(passwordEncoder).matches("12345678", "hashed-password");
     }
 
     @Test
@@ -147,6 +150,8 @@ public class UserServiceImplTest {
                 InvalidCredentialsException.class,
                 () -> userServiceImpl.login(request)
         );
+
+        verify(passwordEncoder, never()).matches(anyString(), anyString());
     }
 
     @Test
@@ -173,6 +178,8 @@ public class UserServiceImplTest {
                 InvalidCredentialsException.class,
                 () -> userServiceImpl.login(request)
         );
+
+        verify(passwordEncoder).matches("wrong-password", "hashed-password");
     }
 
     @Test
