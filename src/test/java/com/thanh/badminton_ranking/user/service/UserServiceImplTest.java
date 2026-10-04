@@ -1,8 +1,12 @@
 package com.thanh.badminton_ranking.user.service;
 
+import com.thanh.badminton_ranking.authentication.dto.request.LoginRequest;
 import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
+import com.thanh.badminton_ranking.authentication.dto.response.LoginResponse;
 import com.thanh.badminton_ranking.authentication.dto.response.RegisterResponse;
 import com.thanh.badminton_ranking.common.enums.Role;
+import com.thanh.badminton_ranking.exception.InvalidCredentialsException;
+import com.thanh.badminton_ranking.exception.UserDisabledException;
 import com.thanh.badminton_ranking.exception.UsernameAlreadyExistsException;
 import com.thanh.badminton_ranking.user.entity.User;
 import com.thanh.badminton_ranking.user.repository.UserRepository;
@@ -32,6 +36,7 @@ public class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
+    ///============REGISTER=========================
     @Test
     void register_sholdSuccess_whenUsernameNotExists() {
 
@@ -97,4 +102,105 @@ public class UserServiceImplTest {
         verify(passwordEncoder, never()).encode(anyString());
         verify(userRepository,never()).save(any(User.class));
     }
+
+    ////////=============LOGIN===================
+    @Test
+    void login_shouldSuccess_whenCredentialsValid() {
+        // Arrange
+        LoginRequest request = new LoginRequest();
+        request.setUsername("thanh");
+        request.setPassword("12345678");
+
+        User user = new User();
+        user.setUsername("thanh");
+        user.setPassword("hashed-password");
+        user.setRole(Role.USER);
+        user.setEnabled(true);
+
+        when(userRepository.findByUsername("thanh"))
+                .thenReturn(Optional.of(user));
+
+        when(passwordEncoder.matches("12345678", "hashed-password"))
+                .thenReturn(true);
+
+        // Act
+        LoginResponse response = userServiceImpl.login(request);
+
+        // Assert
+        assertNotNull(response);
+        assertEquals("thanh", response.getUsername());
+        assertEquals(Role.USER, response.getRole());
+    }
+
+    @Test
+    void login_shouldThrowInvalidCredentialsException_whenUsernameNotExists() {
+        // Arrange
+        LoginRequest request = new LoginRequest();
+        request.setUsername("unknown");
+        request.setPassword("12345678");
+
+        when(userRepository.findByUsername("unknown"))
+                .thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(
+                InvalidCredentialsException.class,
+                () -> userServiceImpl.login(request)
+        );
+    }
+
+    @Test
+    void login_shouldThrowInvalidCredentialsException_whenPasswordIncorrect() {
+        // Arrange
+        LoginRequest request = new LoginRequest();
+        request.setUsername("thanh");
+        request.setPassword("wrong-password");
+
+        User user = new User();
+        user.setUsername("thanh");
+        user.setPassword("hashed-password");
+        user.setRole(Role.USER);
+        user.setEnabled(true);
+
+        when(userRepository.findByUsername("thanh"))
+                .thenReturn(Optional.of(user));
+
+        when(passwordEncoder.matches("wrong-password", "hashed-password"))
+                .thenReturn(false);
+
+        // Act & Assert
+        assertThrows(
+                InvalidCredentialsException.class,
+                () -> userServiceImpl.login(request)
+        );
+    }
+
+    @Test
+    void login_shouldThrowUserDisabledException_whenUserDisabled() {
+        // Arrange
+        LoginRequest request = new LoginRequest();
+        request.setUsername("thanh");
+        request.setPassword("12345678");
+
+        User user = new User();
+        user.setUsername("thanh");
+        user.setPassword("hashed-password");
+        user.setRole(Role.USER);
+        user.setEnabled(false);
+
+        when(userRepository.findByUsername("thanh"))
+                .thenReturn(Optional.of(user));
+
+        when(passwordEncoder.matches("12345678", "hashed-password"))
+                .thenReturn(true);
+
+        // Act & Assert
+        assertThrows(
+                UserDisabledException.class,
+                () -> userServiceImpl.login(request)
+        );
+    }
+
+
+
 }
