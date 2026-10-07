@@ -4,6 +4,7 @@ import com.thanh.badminton_ranking.authentication.dto.request.LoginRequest;
 import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
 import com.thanh.badminton_ranking.authentication.dto.response.LoginResponse;
 import com.thanh.badminton_ranking.authentication.dto.response.RegisterResponse;
+import com.thanh.badminton_ranking.authentication.service.JwtService;
 import com.thanh.badminton_ranking.common.enums.Role;
 import com.thanh.badminton_ranking.exception.InvalidCredentialsException;
 import com.thanh.badminton_ranking.exception.UserDisabledException;
@@ -22,6 +23,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
 
 
     @Override
@@ -64,9 +67,12 @@ public class UserServiceImpl implements UserService {
         if(Boolean.FALSE.equals(user.getEnabled())) {
             throw new UserDisabledException("Account is not enabled");
         }
+
+        String token = jwtService.generateToken(user);
         return new  LoginResponse(
                 user.getUsername(),
-                user.getRole()
+                user.getRole(),
+                token
         );
     }
 
