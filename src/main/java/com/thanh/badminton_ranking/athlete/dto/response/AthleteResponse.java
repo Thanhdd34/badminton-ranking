@@ -9,7 +9,8 @@ public record  AthleteResponse(
         String fullName,
         Gender gender,
         String photoUrl,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 ) {
 
 }
