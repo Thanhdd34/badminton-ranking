@@ -44,4 +44,15 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
+
+    @ExceptionHandler(AthleteNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAthleteNotFound(
+            AthleteNotFoundException ex) {
+
+        ErrorResponse response = new ErrorResponse(ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
 }
