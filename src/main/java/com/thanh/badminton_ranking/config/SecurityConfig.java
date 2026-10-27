@@ -1,6 +1,7 @@
 package com.thanh.badminton_ranking.config;
 
 import com.thanh.badminton_ranking.authentication.filter.JwtAuthenticationFilter;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -33,23 +34,33 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/register",
-                                            "/api/users/login")
-                        .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/athletes/**")
-                        .hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers(
-                                HttpMethod.POST, "/api/athletes/**"
+                                "/api/users/register",
+                                "/api/users/login"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/athletes",
+                                "/api/athletes/**"
+                        ).hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/athletes"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
-                                HttpMethod.PUT, "/api/athletes/**"
+                                HttpMethod.PUT,
+                                "/api/athletes/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
-                                HttpMethod.DELETE, "/api/athletes/**"
+                                HttpMethod.DELETE,
+                                "/api/athletes/**"
                         ).hasRole("ADMIN")
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
