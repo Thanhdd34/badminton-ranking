@@ -5,7 +5,7 @@ import com.thanh.badminton_ranking.athlete.dto.request.AthleteRequest;
 import com.thanh.badminton_ranking.athlete.dto.response.AthleteResponse;
 import com.thanh.badminton_ranking.athlete.entity.Athlete;
 import com.thanh.badminton_ranking.athlete.repository.AthleteRepository;
-import com.thanh.badminton_ranking.exception.AthleteNotFoundException;
+import com.thanh.badminton_ranking.common.exception.AthleteNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

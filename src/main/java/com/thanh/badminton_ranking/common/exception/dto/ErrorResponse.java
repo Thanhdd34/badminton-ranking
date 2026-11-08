@@ -1,4 +1,4 @@
-package com.thanh.badminton_ranking.exception.dto;
+package com.thanh.badminton_ranking.common.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

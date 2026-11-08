@@ -1,4 +1,4 @@
-package com.thanh.badminton_ranking.exception;
+package com.thanh.badminton_ranking.common.exception;
 
 public class UserDisabledException extends RuntimeException {
     public UserDisabledException(String message) {

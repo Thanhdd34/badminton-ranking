@@ -22,9 +22,9 @@ public class TournamentRequest {
     @Size(max = 150)
     private String location;
 
-    @NotNull(message = "Start day is require!")
+    @NotNull(message = "Start date require!")
     private LocalDate startDate;
 
-    @NotNull(message = "End day is require!")
+    @NotNull(message = "End date is require!")
     private LocalDate endDate;
 }

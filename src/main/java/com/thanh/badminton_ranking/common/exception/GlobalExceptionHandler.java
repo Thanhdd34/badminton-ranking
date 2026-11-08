@@ -1,6 +1,6 @@
-package com.thanh.badminton_ranking.exception;
+package com.thanh.badminton_ranking.common.exception;
 
-import com.thanh.badminton_ranking.exception.dto.ErrorResponse;
+import com.thanh.badminton_ranking.common.exception.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -54,5 +54,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(response);
+    }
+
+    @ExceptionHandler(InvalidTournamentDateException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidTournamentDateException(
+            InvalidTournamentDateException ex){
+
+        return  ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(ex.getMessage()));
     }
 }

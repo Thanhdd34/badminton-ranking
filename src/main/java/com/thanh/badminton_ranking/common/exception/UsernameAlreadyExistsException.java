@@ -1,4 +1,4 @@
-package com.thanh.badminton_ranking.exception;
+package com.thanh.badminton_ranking.common.exception;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
