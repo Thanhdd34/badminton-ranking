@@ -40,6 +40,7 @@ public class SecurityConfig {
                                 "/api/users/login"
                         ).permitAll()
 
+                        //Athlete APIs
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/athletes",
@@ -59,6 +60,13 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/api/athletes/**"
+                        )
+                        .hasRole("ADMIN")
+
+                        //Tournament APIs
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/tournaments"
                         ).hasRole("ADMIN")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().authenticated()
