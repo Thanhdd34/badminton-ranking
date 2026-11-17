@@ -64,4 +64,22 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(ex.getMessage()));
     }
+
+    @ExceptionHandler(TournamentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTournamentNotFound(
+            TournamentNotFoundException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(DuplicateResultException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateResult(
+            DuplicateResultException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(ex.getMessage()));
+    }
 }
