@@ -68,6 +68,10 @@ public class SecurityConfig {
                                 HttpMethod.POST,
                                 "/api/tournaments"
                         ).hasRole("ADMIN")
+
+                        //Result
+                        .requestMatchers(HttpMethod.POST, "/api/results")
+                        .hasRole("ADMIN")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().authenticated()
                 )

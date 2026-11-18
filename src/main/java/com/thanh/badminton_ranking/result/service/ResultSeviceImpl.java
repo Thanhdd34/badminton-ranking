@@ -2,6 +2,7 @@ package com.thanh.badminton_ranking.result.service;
 
 import com.thanh.badminton_ranking.athlete.entity.Athlete;
 import com.thanh.badminton_ranking.athlete.repository.AthleteRepository;
+import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
 import com.thanh.badminton_ranking.common.exception.AthleteNotFoundException;
 import com.thanh.badminton_ranking.common.exception.DuplicateResultException;
 import com.thanh.badminton_ranking.common.exception.TournamentNotFoundException;
@@ -23,7 +24,12 @@ public class ResultSeviceImpl implements ResultService {
     private final TournamentRepository tournamentRepository;
 
     @Override
+    public ResultResponse createResult(RegisterRequest resultRequest) {
+        return null;
+    }
+
     @Transactional
+    @Override
     public ResultResponse createResult(ResultRequest request){
         // find Athlete
         Athlete athlete = athleteRepository.findById(request.getAthleteId())
