@@ -6,6 +6,7 @@ import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
 import com.thanh.badminton_ranking.common.exception.AthleteNotFoundException;
 import com.thanh.badminton_ranking.common.exception.DuplicateResultException;
 import com.thanh.badminton_ranking.common.exception.TournamentNotFoundException;
+import com.thanh.badminton_ranking.common.exception.dto.ResultNotFoundException;
 import com.thanh.badminton_ranking.result.dto.ResultRequest;
 import com.thanh.badminton_ranking.result.dto.ResultResponse;
 import com.thanh.badminton_ranking.result.entity.Result;
@@ -15,6 +16,8 @@ import com.thanh.badminton_ranking.tournament.repository.TournamentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -77,5 +80,29 @@ public class ResultServiceImpl implements ResultService {
                 result.getCreatedAt(),
                 result.getUpdatedAt()
         );
+
 }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResultResponse> getAllResults() {
+
+        List<Result> results = resultRepository.findAll();
+
+        return results.stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ResultResponse getResultById(Long id) {
+        Result result = resultRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResultNotFoundException(id)
+                );
+
+        return toResponse(result);
+    }
+
 }

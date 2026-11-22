@@ -6,9 +6,16 @@ import com.thanh.badminton_ranking.result.dto.ResultResponse;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface ResultService {
     ResultResponse createResult(@Valid RegisterRequest resultRequest);
 
-    @Transactional
+
     ResultResponse createResult(ResultRequest request);
+
+    List<ResultResponse> getAllResults();
+
+    ResultResponse getResultById(Long id);
+
 }

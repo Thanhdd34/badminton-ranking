@@ -1,6 +1,7 @@
 package com.thanh.badminton_ranking.common.exception;
 
 import com.thanh.badminton_ranking.common.exception.dto.ErrorResponse;
+import com.thanh.badminton_ranking.common.exception.dto.ResultNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -80,6 +81,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ResultNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleResultNotFound(
+            ResultNotFoundException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(ex.getMessage()));
     }
 }

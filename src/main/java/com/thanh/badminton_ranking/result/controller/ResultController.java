@@ -8,10 +8,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/results")
@@ -25,5 +24,25 @@ public class ResultController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ResultResponse>> getAllResults() {
+
+        List<ResultResponse> results =
+                resultService.getAllResults();
+
+        return ResponseEntity.ok(results);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResultResponse> getResultById(
+            @PathVariable Long id) {
+
+        ResultResponse response =
+                resultService.getResultById(id);
+
+        return ResponseEntity.ok(response);
     }
 }
