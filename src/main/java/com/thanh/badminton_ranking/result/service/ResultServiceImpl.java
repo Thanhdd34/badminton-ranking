@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ResultSeviceImpl implements ResultService {
+public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
     private final AthleteRepository athleteRepository;
     private final TournamentRepository tournamentRepository;
