@@ -230,4 +230,5 @@ class ResultServiceImplTest {
 
         return request;
     }
+
 }

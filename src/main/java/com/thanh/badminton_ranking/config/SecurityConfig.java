@@ -77,6 +77,11 @@ public class SecurityConfig {
                                 "/api/results",
                                 "/api/results/**"
                         ).hasAnyRole("USER", "ADMIN")
+                        //Ranking
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/rankings/**"
+                        ).hasAnyRole("USER", "ADMIN")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().authenticated()
                 )

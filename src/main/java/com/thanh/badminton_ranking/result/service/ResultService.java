@@ -1,5 +1,6 @@
 package com.thanh.badminton_ranking.result.service;
 
+import com.thanh.badminton_ranking.athlete.entity.Athlete;
 import com.thanh.badminton_ranking.authentication.dto.request.RegisterRequest;
 import com.thanh.badminton_ranking.result.dto.ResultRequest;
 import com.thanh.badminton_ranking.result.dto.ResultResponse;
@@ -17,5 +18,9 @@ public interface ResultService {
     List<ResultResponse> getAllResults();
 
     ResultResponse getResultById(Long id);
+
+    //ResultResponse getResultsByAthleteId(Athlete athleteId);
+
+    //ResultResponse getResultsByAthleteId(Athlete athleteId);
 
 }
