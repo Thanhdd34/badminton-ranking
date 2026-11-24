@@ -1,7 +1,7 @@
 package com.thanh.badminton_ranking.ranking.controller;
 
 import com.thanh.badminton_ranking.common.enums.Gender;
-import com.thanh.badminton_ranking.ranking.dto.RankingResponse;
+import com.thanh.badminton_ranking.ranking.dto.response.RankingResponse;
 import com.thanh.badminton_ranking.ranking.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

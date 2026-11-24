@@ -3,7 +3,7 @@ package com.thanh.badminton_ranking.ranking;
 import com.thanh.badminton_ranking.athlete.entity.Athlete;
 import com.thanh.badminton_ranking.athlete.repository.AthleteRepository;
 import com.thanh.badminton_ranking.common.enums.Gender;
-import com.thanh.badminton_ranking.ranking.dto.RankingResponse;
+import com.thanh.badminton_ranking.ranking.dto.response.RankingResponse;
 import com.thanh.badminton_ranking.ranking.service.RankingServiceImpl;
 import com.thanh.badminton_ranking.result.entity.Result;
 import com.thanh.badminton_ranking.result.repository.ResultRepository;

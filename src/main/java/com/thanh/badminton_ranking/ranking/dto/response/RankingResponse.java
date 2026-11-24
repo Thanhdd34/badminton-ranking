@@ -1,4 +1,4 @@
-package com.thanh.badminton_ranking.ranking.dto;
+package com.thanh.badminton_ranking.ranking.dto.response;
 
 import com.thanh.badminton_ranking.common.enums.Gender;
 import lombok.AllArgsConstructor;
